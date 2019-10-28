@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Hangman</title>
+</head>
+
+<body>
+  <h1>Hangman</h1>
+  <form>
+    <p>3 Leben, bereits genannt: B X</p>
+    <!-- TELLERRAND -->
+    <p>_ E L L E _ _ A _ D</p>
+    <hr />
+    <p>Dein Tipp: <input type="text" name="guess"></p>
+    <p>
+      <input type="button" onclick="alert('Ich verstehe Dich noch nicht!')" value="Rate">
+      <input type="button" onclick="alert('Ich verstehe Dich noch nicht! Aber ein Tipp kostet Dich ein Leben.')" value="Tipp">
+      <input type="button" onclick="alert('Ich verstehe Dich noch nicht! Soll ich wirklich auflösen?')" value="Löse">
+      |
+      <input type="button" onclick="alert('Ich verstehe Dich noch nicht! Neuer Begriff, neues Glück, aber Du verlierst dieses Spiel. Bist Du Dir sicher?')" value="Neuer Begriff">
+    </p>
+  </form>
+
+  <script src="hangman.js"></script>
+</body>
+
+</html>
