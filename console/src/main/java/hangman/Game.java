@@ -1,18 +1,19 @@
 package hangman;
 
+import static hangman.Texts.GAME_OVER;
+import static hangman.Texts.GAME_OVER_GOOD_BYE;
+import static hangman.Texts.GAME_OVER_OUT_OF_WORDS;
+import static hangman.Texts.GAME_OVER_TRIED;
+import static hangman.Texts.GAME_OVER_WANTED;
+import static hangman.Texts.GAME_OVER_WON;
+import static hangman.Texts.PLAY_AGAIN;
+import static hangman.Texts.PLAY_CHEAT;
+import static hangman.Texts.PLAY_GUESS;
+import static hangman.Texts.PLAY_TRIED;
+import static hangman.Texts.PLAY_WRONG;
+
 public class Game
 {
-  private static final String GAME_OVER = "GAME OVER!\n";
-  private static final String GAME_OVER_GOOD_BYE = "Good-bye.";
-  private static final String GAME_OVER_OUT_OF_WORDS = "Sorry, I have no more words for you to gain freedom.";
-  private static final String GAME_OVER_TRIED = "You tried '%s' with %s.";
-  private static final String GAME_OVER_WANTED = "I wanted  '%s'.";
-  private static final String GAME_OVER_WON = "You made it. '%s' was your word to freedom.";
-  private static final String PLAY_AGAIN = "Play again? [y]es? [n]o? ";
-  private static final String PLAY_CHEAT = "Words left are %s.";
-  private static final String PLAY_GUESS = "What is your guess? ";
-  private static final String PLAY_TRIED = "You have %d tries left. You tried %s in vain.";
-  private static final String PLAY_WRONG = "YOU GUESSED WRONG!";
 
   private static final UserInterface ui = new UserInterface();
   private static final Words words = new Words();
