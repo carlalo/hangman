@@ -1,11 +1,11 @@
 package hangman;
 
+import static hangman.Texts.GAME_BYE;
 import static hangman.Texts.GAME_OVER;
-import static hangman.Texts.GAME_OVER_GOOD_BYE;
-import static hangman.Texts.GAME_OVER_OUT_OF_WORDS;
-import static hangman.Texts.GAME_OVER_TRIED;
-import static hangman.Texts.GAME_OVER_WANTED;
-import static hangman.Texts.GAME_OVER_WON;
+import static hangman.Texts.GAME_SPEECHLESS;
+import static hangman.Texts.GAME_TRIED;
+import static hangman.Texts.GAME_WANTED;
+import static hangman.Texts.GAME_WON;
 import static hangman.Texts.PLAY_AGAIN;
 import static hangman.Texts.PLAY_CHEAT;
 import static hangman.Texts.PLAY_GUESS;
@@ -37,34 +37,35 @@ public class Game
       ui.drawGallows(hangman.getFailures());
 
       if (hangman.isWon()) {
-        ui.println(String.format(GAME_OVER_WON, hangman.getSolution()));
+        ui.println(String.format(GAME_WON.text(), hangman.getSolution()));
         return;
       }
 
       if (hangman.isLost()) {
-        ui.println(GAME_OVER);
-        ui.println(String.format(GAME_OVER_TRIED, hangman.getPhrase(), hangman.getMisses()));
-        ui.println(String.format(GAME_OVER_WANTED, hangman.getSolution()));
+        ui.println(GAME_OVER.text());
+        ui.println(String.format(GAME_TRIED.text(), hangman.getPhrase(), hangman.getMisses()));
+        ui.println(String.format(GAME_WANTED.text(), hangman.getSolution()));
         return;
       }
 
       if (!goodGuess) {
-        ui.println(PLAY_WRONG);
+        ui.println(PLAY_WRONG.text());
         ui.println();
       }
 
       if (!(System.getProperty("cheat") == null)) {
-        ui.println(String.format(PLAY_CHEAT, words.toString()));
+        ui.println(String.format(PLAY_CHEAT.text(), words.toString()));
         ui.println();
       }
 
       ui.println(hangman.getPhrase());
       ui.println();
 
-      ui.println(String.format(PLAY_TRIED, hangman.getMaximumFailures() - hangman.getFailures(), hangman.getMisses()));
+      ui.println(String.format(PLAY_TRIED.text(), hangman.getMaximumFailures() - hangman.getFailures(),
+                               hangman.getMisses()));
       ui.println();
 
-      ui.print(PLAY_GUESS);
+      ui.print(PLAY_GUESS.text());
       goodGuess = hangman.guess(ui.input());
     } while (true);
   }
@@ -79,7 +80,7 @@ public class Game
 
       if (words.isEmpty()) {
         ui.println();
-        ui.println(GAME_OVER_OUT_OF_WORDS);
+        ui.println(GAME_SPEECHLESS.text());
         playAgain = false;
       } else {
         playAgain = game.playAgain();
@@ -87,7 +88,7 @@ public class Game
     }
 
     ui.println();
-    ui.println(GAME_OVER_GOOD_BYE);
+    ui.println(GAME_BYE.text());
   }
 
   private boolean playAgain() {
@@ -95,7 +96,7 @@ public class Game
     String answer = "";
 
     do {
-      ui.print(PLAY_AGAIN);
+      ui.print(PLAY_AGAIN.text());
       answer = ui.input().toLowerCase();
     } while (!(answer.startsWith("y") || answer.startsWith("j") || answer.startsWith("n")));
 
