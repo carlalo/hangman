@@ -1,14 +1,19 @@
 package hangman;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Words
 {
   private List<String> words = new ArrayList<>();
 
   public Words() {
-    List.of("terminator", "banana", "computer", "cow", "rain", "water").forEach(word -> words.add(word.toUpperCase()));
+    if (Locale.getDefault().getLanguage().equals(Locale.GERMAN.getLanguage())) {
+      List.of("Termin", "Kapitän", "Computer", "Kuh", "Regen", "Banane", "Wasser", "Kirchturm", "Tisch",
+              "Teppich").forEach(word -> words.add(word.toUpperCase()));
+    } else {
+      List.of("terminator", "banana", "computer", "cow", "rain",
+              "water").forEach(word -> words.add(word.toUpperCase()));
+    }
   }
 
   public String randomWord() {
