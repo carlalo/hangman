@@ -2,6 +2,18 @@ package hangman;
 
 public class Game
 {
+  private static final String GAME_OVER = "GAME OVER!\n";
+  private static final String GAME_OVER_GOOD_BYE = "Good-bye.";
+  private static final String GAME_OVER_OUT_OF_WORDS = "Sorry, I have no more words for you to gain freedom.";
+  private static final String GAME_OVER_TRIED = "You tried '%s' with %s.";
+  private static final String GAME_OVER_WANTED = "I wanted  '%s'.";
+  private static final String GAME_OVER_WON = "You made it. '%s' was your word to freedom.";
+  private static final String PLAY_AGAIN = "Play again? [y]es? [n]o? ";
+  private static final String PLAY_CHEAT = "Words left are %s.";
+  private static final String PLAY_GUESS = "What is your guess? ";
+  private static final String PLAY_TRIED = "You have %d tries left. You tried %s in vain.";
+  private static final String PLAY_WRONG = "YOU GUESSED WRONG!";
+
   private static final UserInterface ui = new UserInterface();
   private static final Words words = new Words();
   private Hangman hangman;
@@ -24,35 +36,34 @@ public class Game
       ui.drawGallows(hangman.getFailures());
 
       if (hangman.isWon()) {
-        ui.println(String.format("You made it. '%s' was your word to freedom.", hangman.getSolution()));
+        ui.println(String.format(GAME_OVER_WON, hangman.getSolution()));
         return;
       }
 
       if (hangman.isLost()) {
-        ui.println("GAME OVER!\n");
-        ui.println(String.format("You tried '%s' with %s.", hangman.getPhrase(), hangman.getMisses()));
-        ui.println(String.format("I wanted  '%s'.", hangman.getSolution()));
+        ui.println(GAME_OVER);
+        ui.println(String.format(GAME_OVER_TRIED, hangman.getPhrase(), hangman.getMisses()));
+        ui.println(String.format(GAME_OVER_WANTED, hangman.getSolution()));
         return;
       }
 
       if (!goodGuess) {
-        ui.println("YOU GUESSED WRONG!");
+        ui.println(PLAY_WRONG);
         ui.println();
       }
 
       if (!(System.getProperty("cheat") == null)) {
-        ui.println(String.format("Words left are %s.", words.toString()));
+        ui.println(String.format(PLAY_CHEAT, words.toString()));
         ui.println();
       }
 
       ui.println(hangman.getPhrase());
       ui.println();
 
-      ui.println(String.format("You have %d tries left. You tried %s in vain.",
-                               hangman.getMaximumFailures() - hangman.getFailures(), hangman.getMisses()));
+      ui.println(String.format(PLAY_TRIED, hangman.getMaximumFailures() - hangman.getFailures(), hangman.getMisses()));
       ui.println();
 
-      ui.print("What is your guess? ");
+      ui.print(PLAY_GUESS);
       goodGuess = hangman.guess(ui.input());
     } while (true);
   }
@@ -67,7 +78,7 @@ public class Game
 
       if (words.isEmpty()) {
         ui.println();
-        ui.println("Sorry, I have no more words for you to gain freedom.");
+        ui.println(GAME_OVER_OUT_OF_WORDS);
         playAgain = false;
       } else {
         playAgain = game.playAgain();
@@ -75,7 +86,7 @@ public class Game
     }
 
     ui.println();
-    ui.println("Good-bye.");
+    ui.println(GAME_OVER_GOOD_BYE);
   }
 
   private boolean playAgain() {
@@ -83,9 +94,9 @@ public class Game
     String answer = "";
 
     do {
-      ui.print("Play again? [y]es? [n]o? ");
+      ui.print(PLAY_AGAIN);
       answer = ui.input().toLowerCase();
-    } while (!(answer.startsWith("y") || answer.startsWith("n")));
+    } while (!(answer.startsWith("y") || answer.startsWith("j") || answer.startsWith("n")));
 
     return !answer.startsWith("n");
   }
