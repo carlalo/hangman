@@ -1,50 +1,92 @@
 package hangman;
 
-import java.util.Scanner;
-
 public class Game
 {
-  public static void main(final String[] args) {
-    final UserInterface ui = new UserInterface();
-    final Hangman hangman = new Hangman();
+  private static final UserInterface ui = new UserInterface();
+  private static final Words words = new Words();
+  private Hangman hangman;
 
+  public Game() {
+    hangman = new Hangman(words);
+  }
+
+  public void reset() {
+    words.forget(hangman.getSolution());
+    hangman = new Hangman(words);
+  }
+
+  public void play() {
     boolean goodGuess = true;
-    String guess = "";
 
-    try (final Scanner sc = new Scanner(System.in)) {
-      do {
-        ui.clearScreen();
-        ui.splash();
-        ui.drawGallows(hangman.getFailures());
+    do {
+      ui.clearScreen();
+      ui.splash();
+      ui.drawGallows(hangman.getFailures());
 
-        if (hangman.isWon()) {
-          System.out.println(String.format("You made it. '%s' was your word to freedom.", hangman.getSolution()));
-          System.exit(0);
-        }
+      if (hangman.isWon()) {
+        ui.println(String.format("You made it. '%s' was your word to freedom.", hangman.getSolution()));
+        return;
+      }
 
-        if (hangman.isLost()) {
-          System.out.println("GAME OVER!\n");
-          System.out.println(String.format("You tried '%s' with %s.", hangman.getPhrase(), hangman.getMisses()));
-          System.out.println(String.format("I wanted  '%s'.", hangman.getSolution()));
-          System.exit(2);
-        }
+      if (hangman.isLost()) {
+        ui.println("GAME OVER!\n");
+        ui.println(String.format("You tried '%s' with %s.", hangman.getPhrase(), hangman.getMisses()));
+        ui.println(String.format("I wanted  '%s'.", hangman.getSolution()));
+        return;
+      }
 
-        if (!goodGuess) {
-          System.out.println("YOU GUESSED WRONG!");
-          System.out.println();
-        }
+      if (!goodGuess) {
+        ui.println("YOU GUESSED WRONG!");
+        ui.println();
+      }
 
-        System.out.println(hangman.getPhrase());
-        System.out.println();
+      if (!(System.getProperty("cheat") == null)) {
+        ui.println(String.format("Words left are %s.", words.toString()));
+        ui.println();
+      }
 
-        System.out.println(String.format("You have %d tries left. You tried %s in vain.",
-                                         hangman.getMaximumFailures() - hangman.getFailures(), hangman.getMisses()));
-        System.out.println();
+      ui.println(hangman.getPhrase());
+      ui.println();
 
-        System.out.print("What is your guess? ");
-        guess = sc.next();
-        goodGuess = hangman.guess(guess);
-      } while (true);
+      ui.println(String.format("You have %d tries left. You tried %s in vain.",
+                               hangman.getMaximumFailures() - hangman.getFailures(), hangman.getMisses()));
+      ui.println();
+
+      ui.print("What is your guess? ");
+      goodGuess = hangman.guess(ui.input());
+    } while (true);
+  }
+
+  public static void main(final String[] args) {
+    boolean playAgain = true;
+    final Game game = new Game();
+
+    while (playAgain) {
+      game.play();
+      game.reset();
+
+      if (words.isEmpty()) {
+        ui.println();
+        ui.println("Sorry, I have no more words for you to gain freedom.");
+        playAgain = false;
+      } else {
+        playAgain = game.playAgain();
+      }
     }
+
+    ui.println();
+    ui.println("Good-bye.");
+  }
+
+  private boolean playAgain() {
+    ui.println();
+    String answer = "";
+
+    do {
+      ui.print("Play again? [y]es? [n]o? ");
+      answer = ui.input().toLowerCase();
+    } while (!(answer.startsWith("y") || answer.startsWith("n")));
+
+    return !answer.startsWith("n");
   }
 }

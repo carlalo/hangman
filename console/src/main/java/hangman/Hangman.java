@@ -6,15 +6,14 @@ public class Hangman
 {
   private static final int TRIES = 7;
 
-  private Dictionary dictionary = new Dictionary();
   private int fails;
 
   private String solution;
   private String phrase;
   private TreeSet<Character> misses;
 
-  public Hangman() {
-    solution = dictionary.randomWord();
+  public Hangman(final Words words) {
+    solution = words.randomWord();
     phrase = "*".repeat(solution.length());
     fails = 0;
     misses = new TreeSet<>();
@@ -31,7 +30,7 @@ public class Hangman
   public boolean guess(final String guess) {
     if (isLost()) return false;
 
-    final char guessedCharacter = guess.charAt(0);
+    final char guessedCharacter = guess.toUpperCase().charAt(0);
 
     final StringBuilder mask = new StringBuilder();
     for (int i = 0; i < solution.length(); ++i) {

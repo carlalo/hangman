@@ -1,8 +1,13 @@
 package hangman;
 
+import java.util.Arrays;
+import java.util.Scanner;
+
 public class UserInterface
 {
-  String[][] images = {
+  private static final Scanner SCAN = new Scanner(System.in);
+
+  private static String[][] images = {
     {
       "       ",
       "       ",
@@ -96,19 +101,32 @@ public class UserInterface
   public void drawGallows(final int fails) {
     final int index = Math.min(fails, images.length - 1);
     for (int line = 0; line < images[index].length; ++line) {
-      System.out.println(images[index][line]);
+      println(images[index][line]);
     }
-    System.out.println();
+    println();
   }
 
   public void splash() {
-    System.out.println("=".repeat(72));
-    System.out.println("HANGMAN | Can you escape the gallows?");
-    System.out.println("=".repeat(72));
-    System.out.println();
+    println("=".repeat(72));
+    println("HANGMAN | Can you escape the gallows?");
+    println("=".repeat(72));
+    println();
   }
 
   public void clearScreen() {
-    System.out.println("\n".repeat(50));
+    println("\n".repeat(50));
+  }
+
+  public void print(final String... text) {
+    Arrays.stream(text).forEach(System.out::print);
+  }
+
+  public void println(final String... text) {
+    print(text);
+    System.out.println();
+  }
+
+  public String input() {
+    return SCAN.next();
   }
 }
