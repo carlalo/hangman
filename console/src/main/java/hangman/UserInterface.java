@@ -108,7 +108,7 @@ public class UserInterface
 
   public void splash() {
     println("=".repeat(72));
-    println("HANGMAN | Can you escape the gallows?");
+    println("HANGMAN");
     println("=".repeat(72));
     println();
   }
