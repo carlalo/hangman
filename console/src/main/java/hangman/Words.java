@@ -8,11 +8,13 @@ public class Words
 
   public Words() {
     if (Locale.getDefault().getLanguage().equals(Locale.GERMAN.getLanguage())) {
-      List.of("Termin", "Kapitän", "Computer", "Kuh", "Regen", "Banane", "Wasser", "Kirchturm", "Tisch",
-              "Teppich").forEach(word -> words.add(word.toUpperCase()));
+      List.of("Termin", "Kapitän", "Computer", "Kuh", "Regen", "Banane", "Wasser", "Kirchturm", "Tisch", "Teppich",
+              "Regenschauer", "Bildschirm", "Fernseher", "Regenschirm", "Apfelkuchen", "Rosine", "Schwein", "Pferd",
+              "Katze").forEach(word -> words.add(word.toUpperCase()));
     } else {
-      List.of("terminator", "banana", "computer", "cow", "rain",
-              "water").forEach(word -> words.add(word.toUpperCase()));
+      List.of("apple", "banana", "computer", "cow", "rain", "umbrella", "shower", "pineapple", "captain", "table",
+              "carpet", "water", "monitor", "television", "raisin", "pig", "horse", "date", "church", "shopping",
+              "garden", "cat", "supermarket").forEach(word -> words.add(word.toUpperCase()));
     }
   }
 
