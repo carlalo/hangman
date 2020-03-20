@@ -98,7 +98,7 @@ public class Game
     do {
       ui.print(PLAY_AGAIN.text());
       answer = ui.input().toLowerCase();
-    } while (!(answer.startsWith("y") || answer.startsWith("j") || answer.startsWith("n")));
+    } while (!(answer.startsWith("y") || answer.startsWith("j") || answer.startsWith("q") || answer.startsWith("n")));
 
     return !answer.startsWith("n");
   }
